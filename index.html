@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<!--Menginformasikan kepada Microsoft (Edge) bahwa dokumen/script ini berupa HTML5-->
+<html lang="id">
+<!--Menyatakan bahwa bahasa yang digunakan berupa Bahasa Indonesia-->
+<head>
+<!--Merupakan bagian yang menyimpan mengenai informasi halaman web-->
+    <meta charset="UTF-8">
+    <!--Berguna agar semua karakter, termasuk huruf, simbol, dan tanda baca, dapat terbaca dengan jelas-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Berguna untuk menyesuaikan halaman web pada berbagai device sehingga tetap tersusun rapi & sesuai-->
+    <title>Data Statistik Jumlah Penduduk di Provinsi Bengkulu</title>
+    <!--Merupakan judul data yang muncul pada halaman web-->
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!--Berguna untuk menampilkan Leaflet berupa OpenStreetMap Provinsi Bengkulu-->
+
+    <!-- Import font Copperplate Gothic Bold -->
+    <link href="https://fonts.cdnfonts.com/css/copperplate-gothic-bold" rel="stylesheet">
+    <!--Digunakan untuk melakukan impor font agar font dapat digunakan sebagai Judul-->
+
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            background-color: #fffbea;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            text-align: center;
+            background-color: #388e3c;
+            color: white;
+            padding: 25px;
+            border-radius: 0 0 25px 25px;
+        }
+
+        header img {
+            width: 85px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        header h1 {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0;
+            font-family: 'Copperplate Gothic Bold', sans-serif;
+            font-size: 26px;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 8px 0 0;
+            font-size: 14px;
+        }
+
+        .penjelasan {
+            text-align: center;
+            background-color: #f1f8e9;
+            padding: 15px 20px;
+            font-size: 15px;
+            color: #333;
+            width: 85%;
+            margin: 20px auto;
+            border-radius: 10px;
+            border-left: 5px solid #388e3c;
+        }
+
+        table {
+            width: 85%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        th, td {
+            border: 1px solid #bbb;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #8bc34a;
+            color: white;
+        }
+
+        caption {
+            caption-side: top;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2e7d32;
+            white-space: pre-line;
+        }
+
+        tr:last-child {
+            background-color: #f1f8e9;
+            font-weight: bold;
+        }
+
+        .tinggi {
+            background-color: #c6edc8;
+            font-weight: bold;
+        }
+
+        .rendah {
+            background-color: #ffafaf;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f9fbe7;
+        }
+
+        #map {
+            height: 400px;
+            width: 85%;
+            margin: 30px auto;
+            border-radius: 15px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #555;
+            padding: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Path logo sudah diubah jadi relatif -->
+        <img src="https://marthaaurelliaprasetyo.github.io/Acara-4_Selasa-09.15_Martha-AUrellia-Prasetyo_10579/logo.png" alt="Logo Bengkulu">
+        <h1>DATA STATISTIK JUMLAH PENDUDUK DI PROVINSI BENGKULU</h1>
+        <p>Sumber: Badan Pusat Statistik (Sensus Penduduk 2020)</p>
+    </header>
+
+    <div class="penjelasan">
+        Data ini menampilkan jumlah penduduk Provinsi Bengkulu berdasarkan Data hasil Sensus Penduduk Tahun 2020 yang dilakukan oleh Badan Pusat Statistik (BPS). 
+        Informasi ini digunakan untuk mendukung perencanaan pembangunan, kebijakan sosial, serta pelayanan publik di wilayah Provinsi Bengkulu.
+    </div>
+
+    <table>
+        <caption>Data Jumlah Penduduk di Provinsi Bengkulu
+Tahun 2020</caption>
+        <tr>
+            <th>No</th>
+            <th>Kabupaten/Kota</th>
+            <th>Jumlah Penduduk (jiwa)</th>
+        </tr>
+        <tr><td>1</td><td>Bengkulu Selatan</td><td>166.249</td></tr>
+        <tr><td>2</td><td>Rejang Lebong</td><td>256.607</td></tr>
+        <tr><td>3</td><td>Bengkulu Utara</td><td>296.519</td></tr>
+        <tr><td>4</td><td>Kaur</td><td>126.932</td></tr>
+        <tr><td>5</td><td>Seluma</td><td>189.751</td></tr>
+        <tr><td>6</td><td>Mukomuko</td><td>178.641</td></tr>
+        <tr><td>7</td><td>Lebong</td><td>109.951</td></tr>
+        <tr><td>8</td><td>Kepahiang</td><td>146.940</td></tr>
+        <tr><td>9</td><td>Bengkulu Tengah</td><td>119.628</td></tr>
+        <tr><td>10</td><td>Kota Bengkulu</td><td>373.452</td></tr>
+        <tr>
+            <td colspan="2">TOTAL</td>
+            <td>2.010.670</td>
+        </tr>
+    </table>
+
+    <table>
+        <caption>Klasifikasi Jumlah Penduduk per Kabupaten/Kota</caption>
+        <tr>
+            <th>Klasifikasi</th>
+            <th>Kriteria Jumlah Penduduk</th>
+            <th>Kabupaten/Kota</th>
+        </tr>
+        <tr class="tinggi">
+            <td>Tinggi</td>
+            <td>> 250.000 jiwa</td>
+            <td>Rejang Lebong, Bengkulu Utara, Kota Bengkulu</td>
+        </tr>
+        <tr>
+            <td>Sedang</td>
+            <td>150.000 - 250.000 jiwa</td>
+            <td>Bengkulu Selatan, Seluma, Mukomuko, Kepahiang</td>
+        </tr>
+        <tr class="rendah">
+            <td>Rendah</td>
+            <td>< 150.000 jiwa</td>
+            <td>Kaur, Lebong, Bengkulu Tengah</td>
+        </tr>
+    </table>
+
+    <div id="map"></div>
+
+    <footer>
+        <p>© 2025 Data Sensus Penduduk 2020 - BPS Provinsi Bengkulu</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([-3.8, 102.3], 8);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.marker([-3.8, 102.3]).addTo(map)
+            .bindPopup('<b>Provinsi Bengkulu</b><br>Wilayah di Pulau Sumatra bagian barat.')
+            .openPopup();
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<!--Menginformasikan kepada Microsoft (Edge) bahwa dokumen/script ini berupa HTML5-->
+<html lang="id">
+<!--Menyatakan bahwa bahasa yang digunakan berupa Bahasa Indonesia-->
+<head>
+<!--Merupakan bagian yang menyimpan mengenai informasi halaman web-->
+    <meta charset="UTF-8">
+    <!--Berguna agar semua karakter, termasuk huruf, simbol, dan tanda baca, dapat terbaca dengan jelas-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Berguna untuk menyesuaikan halaman web pada berbagai device sehingga tetap tersusun rapi & sesuai-->
+    <title>Data Statistik Jumlah Penduduk di Provinsi Bengkulu</title>
+    <!--Merupakan judul data yang muncul pada halaman web-->
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!--Berguna untuk menampilkan Leaflet berupa OpenStreetMap Provinsi Bengkulu-->
+
+    <!-- Import font Copperplate Gothic Bold -->
+    <link href="https://fonts.cdnfonts.com/css/copperplate-gothic-bold" rel="stylesheet">
+    <!--Digunakan untuk melakukan impor font agar font dapat digunakan sebagai Judul-->
+
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            /*Menginstruksikan agar seluruh teks menggunakan font Times New Roman*/
+            background-color: #fffbea;
+            /*Menginstruksikan agar warna background web berwarna #fffbea (putih gading)*/
+            margin: 0;
+            padding: 0;
+            /*Berguna untuk menghapus jarak default di pinggir browser*/
+        }
+
+        header {
+            text-align: center;
+            /*Mengatur agar logo, judul, dan sumber data yang berada pada bagian header terletak di tengah*/ 
+            background-color: #388e3c;
+            /*Menginstruksikan agar warna background header berwarna #388e3c (hijau)*/
+            color: white;
+            padding: 25px;
+            border-radius: 0 0 25px 25px;
+            /*Berguna agar bagian bawah header dapat berbentuk melengkung*/
+        }
+
+        header img {
+            width: 85px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        header h1 {
+            display: inline-block;
+            /*Menginstruksikan agar logo Provinsi Bengkulu dan Judul dapat sejajar*/
+            vertical-align: middle;
+            margin: 0;
+            font-family: 'Copperplate Gothic Bold', sans-serif;
+            font-size: 26px;
+            letter-spacing: 1px;
+            /*Berguna untuk memberikan jarak/spasi antar huruf*/
+        }
+
+        header p {
+            margin: 8px 0 0;
+            font-size: 14px;
+        }
+
+        .penjelasan {
+            /*Merupakan kotak teks berisi penjelasan mengenai data sensus*/
+            text-align: center;
+            background-color: #f1f8e9;
+            padding: 15px 20px;
+            font-size: 15px;
+            color: #333;
+            width: 85%;
+            margin: 20px auto;
+            border-radius: 10px;
+            border-left: 5px solid #388e3c;
+            /*Menginstruksikan agar warna diubah menjadi #388e3c*/
+        }
+
+        table {
+            width: 85%;
+            /*Menginstruksikan supaya tabel data memiliki jarak 85%*/
+            margin: 30px auto;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        th, td {
+            border: 1px solid #bbb;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #8bc34a;
+            color: white;
+        }
+
+        caption {
+            caption-side: top;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2e7d32;
+            white-space: pre-line; /* biar enter di caption kebaca */
+        }
+
+        tr:last-child {
+            background-color: #f1f8e9;
+            font-weight: bold;
+        }
+
+        /* Warna blok kategori */
+        .tinggi {
+            background-color: #c6edc8; /* hijau muda */
+            font-weight: bold;
+        }
+
+        .rendah {
+            background-color: #ffafaf; /* merah muda */
+            font-weight: bold;
+        }
+
+        /* Efek hover biar interaktif */
+        tr:hover {
+            background-color: #f9fbe7;
+        }
+
+        #map {
+            height: 400px;
+            width: 85%;
+            margin: 30px auto;
+            border-radius: 15px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #555;
+            padding: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="C:\Users\user\OneDrive\Documents\LAPRAK SEM 3_MARTHA AURELLIA\ALPROG\LOGO BENGKULU.png" alt="Logo Bengkulu">
+        <h1>DATA STATISTIK JUMLAH PENDUDUK DI PROVINSI BENGKULU</h1>
+        <p>Sumber: Badan Pusat Statistik (Sensus Penduduk 2020)</p>
+    </header>
+
+    <div class="penjelasan">
+        Data ini menampilkan jumlah penduduk Provinsi Bengkulu berdasarkan Data hasil Sensus Penduduk Tahun 2020 yang dilakukan oleh Badan Pusat Statistik (BPS). 
+        Informasi ini digunakan untuk mendukung perencanaan pembangunan, kebijakan sosial, serta pelayanan publik di wilayah Provinsi Bengkulu.
+    </div>
+
+    <table>
+    <!--Menginstruksikan agar tabel dibuat pada halaman web-->
+        <caption>Data Jumlah Penduduk di Provinsi Bengkulu
+        <!--Menginformasikan bahwa judul tabel berupa "Data Jumlah Penduduk di Provinsi Bengkulu"-->
+Tahun 2020</caption>
+<!--Berguna agar karakter enter di dalam teks HTML tetap ditampilkan sebagai baris baru di tampilan web-->
+        <tr>
+            <th>No</th>
+            <th>Kabupaten/Kota</th>
+            <th>Jumlah Penduduk (jiwa)</th>
+            <!--Mendefinisikan judul kolom atau baris dalam tabel-->
+        </tr>
+        <tr><td>1</td><td>Bengkulu Selatan</td><td>166.249</td></tr>
+        <tr><td>2</td><td>Rejang Lebong</td><td>256.607</td></tr>
+        <tr><td>3</td><td>Bengkulu Utara</td><td>296.519</td></tr>
+        <tr><td>4</td><td>Kaur</td><td>126.932</td></tr>
+        <tr><td>5</td><td>Seluma</td><td>189.751</td></tr>
+        <tr><td>6</td><td>Mukomuko</td><td>178.641</td></tr>
+        <tr><td>7</td><td>Lebong</td><td>109.951</td></tr>
+        <tr><td>8</td><td>Kepahiang</td><td>146.940</td></tr>
+        <tr><td>9</td><td>Bengkulu Tengah</td><td>119.628</td></tr>
+        <tr><td>10</td><td>Kota Bengkulu</td><td>373.452</td></tr>
+        <tr>
+            <td colspan="2">TOTAL</td>
+            <!--Berguna untuk menggabungkan dua kolom menjadi satu sel lebar dalam satu baris tabel-->
+            <td>2.010.670</td>
+            <!--Berguna menampilkan isi dari setiap baris tabel yang berada di bawah judul kolom-->
+        </tr>
+    </table>
+
+    <table>
+        <caption>Klasifikasi Jumlah Penduduk per Kabupaten/Kota</caption>
+        <!--Berguna menampilkan klasifikasi (tinggi, sedang, rendah) berdasarkan kriteria jumlah penduduk-->
+        <tr>
+            <th>Klasifikasi</th>
+            <th>Kriteria Jumlah Penduduk</th>
+            <th>Kabupaten/Kota</th>
+        </tr>
+        <tr class="tinggi">
+            <td>Tinggi</td>
+            <td>> 250.000 jiwa</td>
+            <td>Rejang Lebong, Bengkulu Utara, Kota Bengkulu</td>
+        </tr>
+        <tr>
+            <td>Sedang</td>
+            <td>150.000 - 250.000 jiwa</td>
+            <td>Bengkulu Selatan, Seluma, Mukomuko, Kepahiang</td>
+        </tr>
+        <tr class="rendah">
+            <td>Rendah</td>
+            <td>< 150.000 jiwa</td>
+            <td>Kaur, Lebong, Bengkulu Tengah</td>
+        </tr>
+    </table>
+
+    <div id="map"></div>
+    <!--Merupakan penanda supaya JavaScript dapat mengidentifikasi elemen halaman yang akan diisi dengan peta-->
+
+    <footer>
+        <p>© 2025 Data Sensus Penduduk 2020 - BPS Provinsi Bengkulu</p>
+    </footer>
+    <!--Berguna menampilkan bagian penutup halaman web (sumber data)-->
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Peta Bengkulu
+        var map = L.map('map') /*Berguna membuat objek peta baru di dalam elemen HTML yang memiliki id="map"*/.setView([-3.8, 102.3], 8); // Koordinat Bengkulu
+        /*Digunakan untuk mengatur posisi awal tampilan peta dari koordinat yang menunjukkan wilayah Provinsi Bengkulu*/
+
+        // Tambahkan tile peta (dari OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+            /*Merupakan kredit atau sumber data peta, supaya tetap sesuai lisensi resmi OpenStreetMap.*/
+        }).addTo(map);
+        /*Menginstruksikan agar layer tersebutditambahkan ke objek peta yang sudah dibuat sebelumnya*/
+
+        // Marker lokasi Bengkulu
+        L.marker([-3.8, 102.3]).addTo(map)
+        /*Berguna membuat penanda/marker di titik koordinat Bengkulu*/
+            .bindPopup('<b>Provinsi Bengkulu</b><br>Wilayah di Pulau Sumatra bagian barat.')
+            /*Berguna menambahkan keterangan pop-up yang muncul ketika marker diklik*/
+            .openPopup();
+    </script>
+</body>
+</html>
